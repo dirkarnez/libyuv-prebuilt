@@ -62,7 +62,7 @@ jobs:
         run: |
           cd /d "C:\libyuv" &&^
           dir &&^
-          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/INSTALL\s*(\s*PROGRAMS\s*${CMAKE_BINARY_DIR}/yuvconvert\s*DESTINATION\s*bin\s*)/INSTALL ( TARGETS yuvconvert							DESTINATION bin )/g" CMakeLists.txt &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/INSTALL\s*(\s*PROGRAMS.*/yuvconvert\s*DESTINATION\s*bin\s*)/INSTALL ( TARGETS yuvconvert							DESTINATION bin )/g" CMakeLists.txt &&^
           type CMakeLists.txt
           
       - name: set PATH, check mingw version, cmake generate, build and install
@@ -80,6 +80,8 @@ jobs:
             gcc --version &&^
             cd /d "C:\libyuv" &&^
             cmake.exe -G "MinGW Makefiles" ^
+            -DCMAKE_POLICY_DEFAULT_CMP0064=NEW ^
+            -DCMAKE_POLICY_DEFAULT_CMP0074=NEW ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DJPEG_ROOT="%WORKSPACE:\=/%/libjpeg-v9e-mingw64-x86_64-posix-seh-rev0-8.1.0" ^
             -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
