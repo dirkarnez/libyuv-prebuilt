@@ -91,12 +91,12 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: "/c/libyuv/cmake-build"
+          directory: "C:/libyuv/cmake-build"
           filename: "${{ env.mingwTargetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "/c/libyuv/cmake-build/${{ env.mingwTargetZip }}"
+          artifacts: "C:/libyuv/cmake-build/${{ env.mingwTargetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
