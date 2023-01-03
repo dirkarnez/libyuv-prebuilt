@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Create Release
-    runs-on: windows-2019
+    runs-on: windows-latest
     env:
       libraryName: libyuv
       installationPath: libyuv-installation
@@ -63,6 +63,7 @@ jobs:
             git config --global user.email "jdoe@email.com" &&^
             git config --global core.autocrlf false &&^
             git config --global core.filemode false &&^
+            cd /d C:\ &&^
             mkdir libyuv && cd libyuv &&^
             gclient config --name src https://chromium.googlesource.com/libyuv/libyuv &&^
             gclient sync &&^
@@ -76,12 +77,12 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          directory: "libyuv/src/out/Default"
+          directory: "/c/libyuv/src/out/Default"
           filename: "${{ env.msvcTargetZip }}"
           
       - name: Release prebuilt
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "libyuv/src/out/Default/${{ env.msvcTargetZip }}"
+          artifacts: "/c/libyuv/src/out/Default/${{ env.msvcTargetZip }}"
           allowUpdates: true
           token: ${{ secrets.GITHUB_TOKEN }}
