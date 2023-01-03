@@ -46,7 +46,6 @@ jobs:
         shell: cmd
         run: cd /d ${{ github.workspace }} && curl https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/PortableGit-2.38.1-64-bit.7z.exe -L --output PortableGit-2.38.1-64-bit.7z.exe && dir && 7z.exe x PortableGit-2.38.1-64-bit.7z.exe -o"PortableGit-2.38.1-64-bit"
         
-        
       - shell: cmd
         run: |
           curl https://github.com/dirkarnez/libjpeg-prebuilt/releases/download/v9e/libjpeg-v9e-mingw64-x86_64-posix-seh-rev0-8.1.0.zip -L --output libjpeg-v9e-mingw64-x86_64-posix-seh-rev0-8.1.0.zip &&^
@@ -59,6 +58,13 @@ jobs:
 #           dir &&^
 #           7z.exe x python-3.8.10-amd64-portable.zip -o"python-3.8.10-amd64-portable"
 
+      - shell: cmd
+        run: |
+          cd socket.io-client-cpp &&^
+          dir &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/INSTALL\s*(\s*PROGRAMS\s*${CMAKE_BINARY_DIR}/yuvconvert\s*DESTINATION\s*bin\s*)/INSTALL ( TARGETS yuvconvert							DESTINATION bin )/g" CMakeLists.txt &&^
+          type CMakeLists.txt
+          
       - name: set PATH, check mingw version, cmake generate, build and install
         shell: cmd
         run: |
@@ -75,10 +81,10 @@ jobs:
             cd /d "C:\libyuv" &&^
             cmake.exe -G "MinGW Makefiles" ^
             -DCMAKE_BUILD_TYPE=Release ^
-            -DJPEG_DIR="%WORKSPACE:\=/%/libjpeg-v9e-mingw64-x86_64-posix-seh-rev0-8.1.0"^
+            -DJPEG_ROOT="%WORKSPACE:\=/%/libjpeg-v9e-mingw64-x86_64-posix-seh-rev0-8.1.0" ^
             -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
             cd cmake-build && cmake --build . && cmake --install . 
-   
+            
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
