@@ -47,17 +47,15 @@ jobs:
       - name: set PATH, check mingw version, cmake generate, build and install
         shell: cmd
         run: |
-            echo %PATH%
             set PATH=^
             C:\Windows\System32\WindowsPowerShell\v1.0;^
-            ${{ github.workspace }}\mingw64;^
-            ${{ github.workspace }}\mingw64\bin;^
             ${{ github.workspace }}\ninja-win;^
             ${{ github.workspace }}\depot_tools;^
             ${{ github.workspace }}\PortableGit-2.38.1-64-bit\bin;^
             ${{ github.workspace }}\cmake-3.24.0-windows-x86_64\bin;^
             ${{ github.workspace }}\python-3.8.10-amd64-portable;^
-            ${{ github.workspace }}\python-3.8.10-amd64-portable\Scripts;
+            ${{ github.workspace }}\python-3.8.10-amd64-portable\Scripts;^
+            %PATH%
             gclient &&^
             git config --global user.name "John Doe" &&^
             git config --global user.email "jdoe@email.com" &&^
