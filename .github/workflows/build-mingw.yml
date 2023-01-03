@@ -62,7 +62,7 @@ jobs:
         run: |
           cd /d "C:\libyuv" &&^
           dir &&^
-          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/INSTALL[ \t]*([ \t]**PROGRAMS.*/yuvconvert[ \t]*DESTINATION[ \t]*bin[ \t]*).*/INSTALL ( TARGETS yuvconvert							DESTINATION bin )/g" CMakeLists.txt &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/INSTALL[ \t]*([ \t]*PROGRAMS.*yuvconvert[ \t]*DESTINATION[ \t]*bin[ \t]*).*/INSTALL ( TARGETS yuvconvert							DESTINATION bin )/g" CMakeLists.txt &&^
           type CMakeLists.txt
           
       - name: set PATH, check mingw version, cmake generate, build and install
